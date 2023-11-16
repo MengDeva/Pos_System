@@ -10,8 +10,8 @@ class Category(models.Model):
     objects = models.Manager()
     name = models.CharField(max_length=20, unique=True, null=False)
     createBy = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="Category")
-    updateBy = models.ForeignKey(User, on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE, related_name="Category",null=True,blank=True)
+    updateBy = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     createAt = models.DateTimeField(auto_now_add=True)
     updateAt = models.DateTimeField(null=True)
 
