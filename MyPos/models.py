@@ -23,7 +23,7 @@ class Product(models.Model):
     objects = models.Manager()
     name = models.CharField(max_length=20, unique=True, null=True, blank=True)
     barcode = models.BigIntegerField(null=True, unique=True)
-    unitPrice = models.FloatField()
+    sellPrice = models.FloatField()
     qtyInstock = models.IntegerField(null=True, blank=True)
     photo = models.ImageField(upload_to="media/")
     category = models.ForeignKey(
