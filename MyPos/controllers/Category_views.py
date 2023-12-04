@@ -20,14 +20,12 @@ def storeCategory(request):
     category = Category()
     category.name = request.data["name"]
     category.createBy_id = request.data["createBy"]
-    category.updateBy_id = request.data["updateBy"]
     category1 = Category.objects.filter(name=category.name)
     if category1:
         return Response({"message": "Category name already exists"})
     data = {
         "name": category.name,
         "createBy": category.createBy_id,
-        "updateBy": category.updateBy_id
     }
     serializer = CategorySerializer(data=data)
     if serializer.is_valid():

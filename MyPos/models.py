@@ -30,9 +30,9 @@ class Product(models.Model):
         Category, on_delete=models.CASCADE, related_name="Product")
     createBy = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="Product")
-    updateBy = models.ForeignKey(User, on_delete=models.CASCADE)
+    updateBy = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     createAt = models.DateTimeField(auto_now_add=True)
-    updateAt = models.DateTimeField(null=True)
+    updateAt = models.DateTimeField(null=True,blank=True)
 
     def __str__(self):
         return self.name

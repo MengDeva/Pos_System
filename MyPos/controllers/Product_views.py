@@ -1,4 +1,3 @@
-import datetime
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -37,7 +36,8 @@ def storeProduct(request):
             product.save()
             return Response({"message": "Product Created"}, status=status.HTTP_201_CREATED)
     except Exception as ex:
-        return Response({"Error":ex},status=status.HTTP_400_BAD_REQUEST)
+        return Response({"Error": +str(ex)},status=status.HTTP_400_BAD_REQUEST)
+
 # @api_view(["GET"])
 # def findById(request, id):
 #     try:
