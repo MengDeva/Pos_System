@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'Pos_System.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mypos',
+        'NAME': 'mypos1',
         'USER': 'root',
         'PASSWORD': 'Deva@2015',
         'HOST': 'localhost',

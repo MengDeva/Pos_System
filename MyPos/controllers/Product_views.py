@@ -57,14 +57,20 @@ def storeProduct(request):
 #         serializer = CategorySerializer(category, many=True)
 #         return Response(serializer.data,status=status.HTTP_200_OK)
 #
-# @api_view(["GET","DELETE"])
-# def deleteById(request,id):
-#     category = Category.objects.filter(id=id)
-#     if category.count()==0:
-#         return Response({"message":"Id Not Found: "+id})
-#     category.delete()
-#     return Response({"message": "Category deleted"},status=status.HTTP_200_OK)
-#
+@api_view(["GET","DELETE"])
+def deleteById(request,id):
+    try:
+        product = Product.objects.get(pk=id)
+    except Product.DoesNotExist:
+        return Response({"message": "ID Not Found:" + id})
+    if product.photo:
+        product.photo.delete()
+        product.delete()
+        return Response({"message": "Product Deleted"},status=status.HTTP_201_CREATED)
+    else:
+        product.delete()
+        return Response({"message": "Product Deleted"}, status=status.HTTP_201_CREATED)
+
 # @api_view(["GET","PUT"])
 # def updateById(request,id):
 #     try:
