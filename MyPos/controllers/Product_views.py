@@ -23,7 +23,7 @@ def storeProduct(request):
         if product1:
             return Response({"message": "Product name already exists"})
         product.barcode = request.data["barcode"]
-        product.sellPrice = request.data["sellPrice"]
+        product.unitPrice = request.data["unitPrice"]
         product.qtyInstock = request.data["qtyInstock"]
         product.category_id = request.data["category"]
         product.createBy_id = request.data["createBy"]
@@ -71,22 +71,35 @@ def deleteById(request,id):
         product.delete()
         return Response({"message": "Product Deleted"}, status=status.HTTP_201_CREATED)
 
-# @api_view(["GET","PUT"])
-# def updateById(request,id):
-#     try:
-#         category=Category.objects.get(pk=id)
-#     except Category.DoesNotExist:
-#         return Response({"message": "ID Not found: " + id})
-#     category.name=request.data["name"]
-#     category.updateBy_id=request.data["updateBy"]
-#     category.updateAt=datetime.datetime.now()
-#     data={
-#             "name": category.name,
-#             "updateBy": category.updateBy_id,
-#             "updateAt": category.updateAt
-#     }
-#     serializer=CategorySerializer(category,data=data)
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response({"message": "Category Updated"}, status=status.HTTP_200_OK)
-#     return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view(["GET","PUT"])
+def updateById(request,id):
+    try:
+        product=Product.objects.get(pk=id)
+    except Product.DoesNotExist:
+        return Response({"message": "ID Not found: " + id})
+    product.name = request.data["name"]
+    product.barcode = request.data["barcode"]
+    product.unitPrice = request.data["unitPrice"]
+    product.qtyInstock = request.data["qtyInstock"]
+    product.category_id = request.data["category"]
+    product.updateBy_id = request.data["updateBy"]
+    if product.photo:
+        if len(request.data["photo"])>0:
+            product.photo.delete()
+            product.photo=request.data["photo"]
+            product.save()
+            return Response({"message": "Product Updated"}, status=status.HTTP_200_OK)
+        else:
+            product.save()
+            return Response({"message": "Product Updated"}, status=status.HTTP_201_CREATED)
+    else:
+        if len(request.data["photo"])>0:
+            product.photo=request.data["photo"]
+            product.save()
+            return Response({"message": "Product Updated"}, status=status.HTTP_200_OK)
+        else:
+            product.photo=""
+            product.save()
+            return Response({"message": "Product Updated"}, status=status.HTTP_201_CREATED)
+    #     return Response({"message": "Product Updated"}, status=status.HTTP_200_OK)
+    # return Response(serializer.data, status=status.HTTP_200_OK)

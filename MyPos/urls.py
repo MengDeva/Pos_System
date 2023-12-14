@@ -1,7 +1,7 @@
 
 from django.contrib import admin
-from django.urls import path, include
-from MyPos.controllers import Category_views,Product_views
+from django.urls import path
+from MyPos.controllers import Category_views,Product_views, Sale_view
 
 urlpatterns = [
     path('', Category_views.viewCategory),
@@ -17,7 +17,10 @@ urlpatterns = [
     path('product/', Product_views.viewProduct),
     path('product/store', Product_views.storeProduct),
     # path('product/findById/<id>', Product_views.findById),
-    # path('product/deleteById/<id>', Product_views.deleteById),
+    path('product/deleteById/<id>', Product_views.deleteById),
     # path('product/findByName', Product_views.findByName),
-    # path('product/updateById/<id>', Product_views.updateById),
+    path('product/updateById/<id>', Product_views.updateById),
+
+    #----- Sale -----#
+    path('sale/', Sale_view.commit_data)
 ]
